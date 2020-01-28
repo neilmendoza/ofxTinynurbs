@@ -3,8 +3,8 @@
 //--------------------------------------------------------------
 void ofApp::setup()
 {
-    spline.addVertices({
-        glm::vec3(-100, 0, 0), // std::vector of 2D points
+   spline.addVertices({
+        glm::vec3(-100, 0, 0),
         glm::vec3(0, 100, 0),
         glm::vec3(100, 0, 0),
         glm::vec3(200, 0, 0),
