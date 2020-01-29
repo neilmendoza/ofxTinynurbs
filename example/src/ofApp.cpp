@@ -3,12 +3,11 @@
 //--------------------------------------------------------------
 void ofApp::setup()
 {
-   spline.addVertices({
+    spline.addVertices({
         glm::vec3(-100, 0, 0),
         glm::vec3(0, 100, 0),
         glm::vec3(100, 0, 0),
         glm::vec3(200, 0, 0),
-    
         glm::vec3(140, 0, 100),
         glm::vec3(140, 288, -15),
         glm::vec3(140, 288, -139),
