@@ -150,14 +150,6 @@ namespace nm
         {
             nurbs.knots.push_back(1.f);
         }
-        
-        /*
-        for (auto& f : nurbs.knots)
-        {
-            cout << f << ", ";
-        }
-        cout << endl;
-        nurbs.knots = {0,0,0,1/3.f,2/3.f,1,1,1};*/
     }
     
     void Nurbs::clear()
