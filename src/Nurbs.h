@@ -44,25 +44,26 @@ namespace nm
         
         void addVertices(const std::vector<glm::vec3>& vs);
         void addVertex(const glm::vec3& v);
-        glm::vec3 getVertex(unsigned idx) { return nurb.control_points[idx]; }
-        
-        unsigned size() const { return nurb.control_points.size(); }
+        glm::vec3 getVertex(unsigned idx) { return nurbs.control_points[idx]; }
         
         void drawCurve(unsigned resolution = 50);
         void drawVertices(float radius = 4.f);
-        void draw();
+        void draw(float vertexRadius = 4.f);
         
         glm::vec3 curvePoint(float t) const;
         glm::vec3 curveTangent(float t) const;
         
         float distanceLookup(float t);
 
+        void clear();
+        unsigned size() const { return nurbs.control_points.size(); }
+        
     private:
         void updateDistanceLut(unsigned lutSize = 1000);
         void updateKnots();
         
         std::map<float, float> distanceLut;
         
-        tinynurbs::Curve<float> nurb; // Planar curve using float32
+        tinynurbs::Curve<float> nurbs;
     };
 }

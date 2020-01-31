@@ -37,32 +37,32 @@ namespace nm
 {
     Nurbs::Nurbs()
     {
-        nurb.degree = 2;
+        nurbs.degree = 2;
     }
     
     void Nurbs::addVertices(const std::vector<glm::vec3>& vs)
     {
-        nurb.control_points = vs;
+        nurbs.control_points = vs;
         
         updateKnots();
     }
 
     void Nurbs::addVertex(const glm::vec3& v)
     {
-        nurb.control_points.push_back(v);
+        nurbs.control_points.push_back(v);
        
-        if (nurb.control_points.size() > 2) updateKnots();
+        if (nurbs.control_points.size() > 2) updateKnots();
     }
 
-    void Nurbs::draw()
+    void Nurbs::draw(float vertexRadius)
     {
         drawCurve();
-        drawVertices();
+        drawVertices(vertexRadius);
     }
 
     void Nurbs::drawVertices(float radius)
     {
-        for (auto& v : nurb.control_points)
+        for (auto& v : nurbs.control_points)
         {
             ofDrawSphere(v, radius);
         }
@@ -70,22 +70,25 @@ namespace nm
 
     glm::vec3 Nurbs::curvePoint(float t) const
     {
-        return tinynurbs::curvePoint(nurb, t);
+        return tinynurbs::curvePoint(nurbs, t);
     }
 
     glm::vec3 Nurbs::curveTangent(float t) const
     {
-        return tinynurbs::curveTangent(nurb, t);
+        return tinynurbs::curveTangent(nurbs, t);
     }
 
     void Nurbs::drawCurve(unsigned resolution)
     {
-        for (unsigned i = 1; i < resolution; ++i)
+        if (nurbs.control_points.size() > 1)
         {
-            ofDrawLine(
-                tinynurbs::curvePoint(nurb, (i - 1) / (float)(resolution - 1)),
-                tinynurbs::curvePoint(nurb, i / (float)(resolution - 1))
-            );
+            for (unsigned i = 1; i < resolution; ++i)
+            {
+                ofDrawLine(
+                    tinynurbs::curvePoint(nurbs, (i - 1) / (float)(resolution - 1)),
+                    tinynurbs::curvePoint(nurbs, i / (float)(resolution - 1))
+                );
+            }
         }
     }
     
@@ -127,33 +130,40 @@ namespace nm
         // check if degree, knots and control points are configured as per
         // #knots == #control points + degree + 1
         
-        const unsigned knots = nurb.control_points.size() + nurb.degree + 1;
-        const unsigned repeatedKnots = nurb.degree + 1;
+        const unsigned knots = nurbs.control_points.size() + nurbs.degree + 1;
+        const unsigned repeatedKnots = nurbs.degree + 1;
         const unsigned numIncreasingKnots = knots - 2 * repeatedKnots;
         
-        nurb.knots.clear();
+        nurbs.knots.clear();
         
         for (unsigned i = 0; i < repeatedKnots; ++i)
         {
-            nurb.knots.push_back(0.f);
+            nurbs.knots.push_back(0.f);
         }
         
         for (unsigned i = 0; i < numIncreasingKnots; ++i)
         {
-            nurb.knots.push_back((i + 1) / (float)(numIncreasingKnots + 1));
+            nurbs.knots.push_back((i + 1) / (float)(numIncreasingKnots + 1));
         }
         
         for (unsigned i = 0; i < repeatedKnots; ++i)
         {
-            nurb.knots.push_back(1.f);
+            nurbs.knots.push_back(1.f);
         }
         
         /*
-        for (auto& f : nurb.knots)
+        for (auto& f : nurbs.knots)
         {
             cout << f << ", ";
         }
         cout << endl;
-        nurb.knots = {0,0,0,1/3.f,2/3.f,1,1,1};*/
+        nurbs.knots = {0,0,0,1/3.f,2/3.f,1,1,1};*/
+    }
+    
+    void Nurbs::clear()
+    {
+        nurbs.control_points.clear();
+        nurbs.knots.clear();
+        distanceLut.clear();
     }
 }
