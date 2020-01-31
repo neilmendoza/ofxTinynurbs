@@ -54,9 +54,9 @@ namespace nm
         if (nurbs.control_points.size() > 2) updateKnots();
     }
 
-    void Nurbs::draw(float vertexRadius)
+    void Nurbs::draw(float vertexRadius, unsigned resolution)
     {
-        drawCurve();
+        drawCurve(resolution);
         drawVertices(vertexRadius);
     }
 

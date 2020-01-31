@@ -48,7 +48,7 @@ namespace nm
         
         void drawCurve(unsigned resolution = 50);
         void drawVertices(float radius = 4.f);
-        void draw(float vertexRadius = 4.f);
+        void draw(float vertexRadius = 4.f, unsigned resolution = 50);
         
         glm::vec3 curvePoint(float t) const;
         glm::vec3 curveTangent(float t) const;
