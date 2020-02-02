@@ -42,7 +42,7 @@ namespace nm
     
     void Nurbs::addVertices(const std::vector<glm::vec3>& vs)
     {
-        nurbs.control_points = vs;
+        nurbs.control_points.insert(nurbs.control_points.end(), vs.begin(), vs.end());
         
         updateKnots();
     }
