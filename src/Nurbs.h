@@ -45,6 +45,7 @@ namespace nm
         void addVertices(const std::vector<glm::vec3>& vs);
         void addVertex(const glm::vec3& v);
         glm::vec3 getVertex(unsigned idx) { return nurbs.control_points[idx]; }
+        const std::vector<glm::vec3>& getVertices() const { return nurbs.control_points; }
         
         void drawCurve(unsigned resolution = 50);
         void drawVertices(float radius = 4.f);
